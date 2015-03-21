@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"io/ioutil"
 	"net/http"
 )
@@ -18,7 +19,7 @@ const (
 type Request struct {
 	url     string
 	headers map[string]string
-	body    []byte
+	body    bytes.Buffer
 	method  RequestMethod
 }
 
