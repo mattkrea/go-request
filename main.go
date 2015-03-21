@@ -46,13 +46,13 @@ func (r *Request) Headers(h map[string]string) *Request {
 }
 
 func (r *Request) Map(i interface{}) error {
-
+	return nil
 }
 
 func (r *Request) Do() ([]byte, error) {
 
 	cli := &http.Client{}
-	req, err := http.NewRequest(r.method, r.url, r.body)
+	req, err := http.NewRequest(r.method.string(), r.url, r.body)
 	if err != nil {
 		return nil, error
 	}
@@ -63,4 +63,19 @@ func (r *Request) Do() ([]byte, error) {
 	}
 
 	return body, nil
+}
+
+func (m RequestMethod) string() string {
+	switch m {
+	case GET:
+		return "GET"
+	case HEAD:
+		return "HEAD"
+	case PUT:
+		return "PUT"
+	case POST:
+		return "POST"
+	case OPTIONS:
+		return "OPTIONS"
+	}
 }
