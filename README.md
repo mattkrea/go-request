@@ -15,7 +15,10 @@ func main() {
 
 	var repos []Repo
 	
-	err := request.New("https://api.github.com/users/mattkrea/repos").Method("GET").Map(&repos)
+	err := request
+		.New("https://api.github.com/users/mattkrea/repos")
+		.Method("GET")
+		.Map(&repos)
 	if err != nil {
 		// handle err
 	}
