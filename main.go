@@ -75,6 +75,13 @@ func (r *Request) Post() *Request {
 	return r
 }
 
+func (r *Request) Header(key string, value string) *Request {
+
+	r.headers[key] = value
+
+	return r
+}
+
 func (r *Request) Headers(h map[string]string) *Request {
 	r.headers = h
 
