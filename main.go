@@ -1,18 +1,18 @@
 package main
 
 import (
-	"net/http"
 	"io/ioutil"
+	"net/http"
 )
 
 type RequestMethod string
 
 const (
-	GET RequestMethod = "GET"
-	HEAD = "HEAD"
-	PUT = "PUT"
-	POST = "POST"
-	OPTIONS = "OPTIONS"
+	GET     RequestMethod = "GET"
+	HEAD                  = "HEAD"
+	PUT                   = "PUT"
+	POST                  = "POST"
+	OPTIONS               = "OPTIONS"
 )
 
 type Request struct {
@@ -25,7 +25,7 @@ type Request struct {
 func New(url string) *Request {
 
 	r & Request{
-		URL: url,
+		URL:  url,
 		Body: nil,
 	}
 
@@ -33,8 +33,6 @@ func New(url string) *Request {
 }
 
 func (r *Request) Method(method RequestMethod) *Request {
-
-	if method 
 
 	r.Method = method
 
@@ -48,7 +46,6 @@ func (r *Request) Headers(h map[string]string) *Request {
 }
 
 func (r *Request) Map(i interface{}) error {
-
 
 }
 
