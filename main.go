@@ -40,7 +40,7 @@ func (r *Request) Method(method RequestMethod) *Request {
 	return r
 }
 
-func (r *Request) Get(url string) *Request {
+func Get(url string) *Request {
 
 	return &Request{
 		url:    url,
@@ -48,7 +48,7 @@ func (r *Request) Get(url string) *Request {
 	}
 }
 
-func (r *Request) Put(url string) *Request {
+func Put(url string) *Request {
 
 	return &Request{
 		url:    url,
@@ -56,7 +56,7 @@ func (r *Request) Put(url string) *Request {
 	}
 }
 
-func (r *Request) Head(url string) *Request {
+func Head(url string) *Request {
 
 	return &Request{
 		url:    url,
@@ -64,7 +64,7 @@ func (r *Request) Head(url string) *Request {
 	}
 }
 
-func (r *Request) Options(url string) *Request {
+func Options(url string) *Request {
 
 	return &Request{
 		url:    url,
@@ -72,7 +72,7 @@ func (r *Request) Options(url string) *Request {
 	}
 }
 
-func (r *Request) Post(url string) *Request {
+func Post(url string) *Request {
 
 	return &Request{
 		url:    url,
