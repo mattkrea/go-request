@@ -26,8 +26,7 @@ type Request struct {
 func New(url string) *Request {
 
 	r := &Request{
-		url:  url,
-		body: nil,
+		url: url,
 	}
 
 	return r
@@ -53,14 +52,19 @@ func (r *Request) Map(i interface{}) error {
 func (r *Request) Do() ([]byte, error) {
 
 	cli := &http.Client{}
-	req, err := http.NewRequest(r.method.string(), r.url, r.body)
+	req, err := http.NewRequest(r.method.string(), r.url, nil)
 	if err != nil {
-		return nil, error
+		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(req.body)
+	res, err := cli.Do(req)
 	if err != nil {
-		return nil, error
+		return nil, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
 	}
 
 	return body, nil
@@ -68,8 +72,6 @@ func (r *Request) Do() ([]byte, error) {
 
 func (m RequestMethod) string() string {
 	switch m {
-	case GET:
-		return "GET"
 	case HEAD:
 		return "HEAD"
 	case PUT:
@@ -79,4 +81,6 @@ func (m RequestMethod) string() string {
 	case OPTIONS:
 		return "OPTIONS"
 	}
+
+	return "GET"
 }
