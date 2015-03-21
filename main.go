@@ -83,6 +83,10 @@ func (r *Request) Headers(h map[string]string) *Request {
 
 func (r *Request) Do() ([]byte, error) {
 
+	if r.method == "" {
+		r.method = GET
+	}
+
 	cli := &http.Client{}
 	req, err := http.NewRequest(r.method.string(), r.url, nil)
 	if err != nil {
