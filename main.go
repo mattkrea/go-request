@@ -40,6 +40,41 @@ func (r *Request) Method(method RequestMethod) *Request {
 	return r
 }
 
+func (r *Request) Get() *Request {
+
+	r.method = GET
+
+	return r
+}
+
+func (r *Request) Put() *Request {
+
+	r.method = PUT
+
+	return r
+}
+
+func (r *Request) Head() *Request {
+
+	r.method = HEAD
+
+	return r
+}
+
+func (r *Request) Options() *Request {
+
+	r.method = OPTIONS
+
+	return r
+}
+
+func (r *Request) Post() *Request {
+
+	r.method = POST
+
+	return r
+}
+
 func (r *Request) Headers(h map[string]string) *Request {
 	r.headers = h
 
