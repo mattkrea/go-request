@@ -40,39 +40,44 @@ func (r *Request) Method(method RequestMethod) *Request {
 	return r
 }
 
-func (r *Request) Get() *Request {
+func (r *Request) Get(url string) *Request {
 
-	r.method = GET
-
-	return r
+	return &Request{
+		url:    url,
+		method: GET,
+	}
 }
 
-func (r *Request) Put() *Request {
+func (r *Request) Put(url string) *Request {
 
-	r.method = PUT
-
-	return r
+	return &Request{
+		url:    url,
+		method: PUT,
+	}
 }
 
-func (r *Request) Head() *Request {
+func (r *Request) Head(url string) *Request {
 
-	r.method = HEAD
-
-	return r
+	return &Request{
+		url:    url,
+		method: HEAD,
+	}
 }
 
-func (r *Request) Options() *Request {
+func (r *Request) Options(url string) *Request {
 
-	r.method = OPTIONS
-
-	return r
+	return &Request{
+		url:    url,
+		method: OPTIONS,
+	}
 }
 
-func (r *Request) Post() *Request {
+func (r *Request) Post(url string) *Request {
 
-	r.method = POST
-
-	return r
+	return &Request{
+		url:    url,
+		method: POST,
+	}
 }
 
 func (r *Request) Header(key string, value string) *Request {
