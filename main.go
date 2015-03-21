@@ -2,6 +2,7 @@ package request
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
@@ -45,10 +46,6 @@ func (r *Request) Headers(h map[string]string) *Request {
 	return r
 }
 
-func (r *Request) Map(i interface{}) error {
-	return nil
-}
-
 func (r *Request) Do() ([]byte, error) {
 
 	cli := &http.Client{}
@@ -68,6 +65,18 @@ func (r *Request) Do() ([]byte, error) {
 	}
 
 	return body, nil
+}
+
+func (r *Request) Map(i interface{}) error {
+
+	resp, err := r.Do()
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(resp, &i)
+
+	return err
 }
 
 func (m RequestMethod) string() string {
