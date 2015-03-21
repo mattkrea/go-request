@@ -16,17 +16,17 @@ const (
 )
 
 type Request struct {
-	URL     string
-	Headers map[string]string
-	Body    []byte
-	Method  RequestMethod
+	url     string
+	headers map[string]string
+	body    []byte
+	method  RequestMethod
 }
 
 func New(url string) *Request {
 
-	r & Request{
-		URL:  url,
-		Body: nil,
+	r := &Request{
+		url:  url,
+		body: nil,
 	}
 
 	return r
@@ -34,13 +34,13 @@ func New(url string) *Request {
 
 func (r *Request) Method(method RequestMethod) *Request {
 
-	r.Method = method
+	r.method = method
 
 	return r
 }
 
 func (r *Request) Headers(h map[string]string) *Request {
-	r.Headers = h
+	r.headers = h
 
 	return r
 }
@@ -52,12 +52,12 @@ func (r *Request) Map(i interface{}) error {
 func (r *Request) Do() ([]byte, error) {
 
 	cli := &http.Client{}
-	req, err := http.NewRequest(r.Method, r.URL, r.Body)
+	req, err := http.NewRequest(r.method, r.url, r.body)
 	if err != nil {
 		return nil, error
 	}
 
-	body, err := ioutil.ReadAll(req.Body)
+	body, err := ioutil.ReadAll(req.body)
 	if err != nil {
 		return nil, error
 	}
