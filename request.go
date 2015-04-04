@@ -11,10 +11,11 @@ type RequestMethod string
 
 const (
 	GET     RequestMethod = "GET"
-	HEAD                  = "HEAD"
-	PUT                   = "PUT"
-	POST                  = "POST"
-	OPTIONS               = "OPTIONS"
+	HEAD    RequestMethod = "HEAD"
+	PUT     RequestMethod = "PUT"
+	POST    RequestMethod = "POST"
+	OPTIONS RequestMethod = "OPTIONS"
+	DELETE  RequestMethod = "DELETE"
 )
 
 type Request struct {
@@ -27,7 +28,9 @@ type Request struct {
 func New(url string) *Request {
 
 	r := &Request{
-		url: url,
+		url:     url,
+		method:  GET,
+		headers: make(map[string]string),
 	}
 
 	return r
@@ -88,7 +91,10 @@ func (r *Request) Header(key string, value string) *Request {
 }
 
 func (r *Request) Headers(h map[string]string) *Request {
-	r.headers = h
+
+	for k, v := range h {
+		r = r.Header(k, v)
+	}
 
 	return r
 }
