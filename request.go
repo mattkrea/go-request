@@ -28,10 +28,11 @@ type Request struct {
 func New(url string) *Request {
 
 	r := &Request{
-		url:     url,
-		method:  GET,
-		headers: make(map[string]string),
+		url:    url,
+		method: GET,
 	}
+
+	r.headers = make(map[string]string)
 
 	return r
 }
@@ -85,12 +86,20 @@ func Post(url string) *Request {
 
 func (r *Request) Header(key string, value string) *Request {
 
+	if r.headers == nil {
+		r.headers = make(map[string]string)
+	}
+
 	r.headers[key] = value
 
 	return r
 }
 
 func (r *Request) Headers(h map[string]string) *Request {
+
+	if r.headers == nil {
+		r.headers = make(map[string]string)
+	}
 
 	for k, v := range h {
 		r = r.Header(k, v)
