@@ -21,7 +21,7 @@ const (
 type Request struct {
 	url     string
 	headers map[string]string
-	body    bytes.Buffer
+	body    *bytes.Buffer
 	method  RequestMethod
 }
 
@@ -52,11 +52,14 @@ func Get(url string) *Request {
 	}
 }
 
-func Put(url string) *Request {
+func Put(url string, body interface{}) *Request {
+
+	requestBody, _ := json.Marshal(body)
 
 	return &Request{
 		url:    url,
 		method: PUT,
+		body:   bytes.NewBuffer(requestBody),
 	}
 }
 
@@ -76,19 +79,18 @@ func Options(url string) *Request {
 	}
 }
 
-func Post(url string) *Request {
+func Post(url string, body interface{}) *Request {
+
+	requestBody, _ := json.Marshal(body)
 
 	return &Request{
 		url:    url,
 		method: POST,
+		body:   bytes.NewBuffer(requestBody),
 	}
 }
 
 func (r *Request) Header(key string, value string) *Request {
-
-	if r.headers == nil {
-		r.headers = make(map[string]string)
-	}
 
 	r.headers[key] = value
 
@@ -96,10 +98,6 @@ func (r *Request) Header(key string, value string) *Request {
 }
 
 func (r *Request) Headers(h map[string]string) *Request {
-
-	if r.headers == nil {
-		r.headers = make(map[string]string)
-	}
 
 	for k, v := range h {
 		r = r.Header(k, v)
@@ -118,6 +116,10 @@ func (r *Request) Do() ([]byte, error) {
 	req, err := http.NewRequest(r.method.string(), r.url, nil)
 	if err != nil {
 		return nil, err
+	}
+
+	for header, value := range r.headers {
+		req.Header.Add(header, value)
 	}
 
 	res, err := cli.Do(req)
