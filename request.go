@@ -113,7 +113,7 @@ func (r *Request) Do() ([]byte, error) {
 	}
 
 	cli := &http.Client{}
-	req, err := http.NewRequest(r.method.string(), r.url, nil)
+	req, err := http.NewRequest(r.method.string(), r.url, r.body)
 	if err != nil {
 		return nil, err
 	}
