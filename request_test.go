@@ -5,6 +5,7 @@ import (
 )
 
 const url string = "http://httpbin.org/get"
+const postURL string = "http://httpbin.org/post"
 
 type httpbinResponseStruct struct {
 	Args    map[string]interface{} `json:"args"`
