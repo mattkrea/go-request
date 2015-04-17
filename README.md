@@ -1,5 +1,8 @@
 # go-request
-WIP: Goal is to provide a chainable API for HTTP requests
+Goal is to provide a chainable API for HTTP requests to get rid of
+some of the common boilerplate.
+
+[![GoDoc](https://godoc.org/github.com/mattkrea/go-request?status.svg)](https://godoc.org/github.com/mattkrea/go-request)
 
 ### Example
 
