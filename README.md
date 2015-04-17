@@ -2,7 +2,7 @@
 Goal is to provide a chainable API for HTTP requests to get rid of
 some of the common boilerplate.
 
-[![GoDoc](https://godoc.org/github.com/mattkrea/go-request?status.svg)](https://godoc.org/github.com/mattkrea/go-request)
+[![GoDoc](https://godoc.org/github.com/mattkrea/go-request?status.svg)](https://godoc.org/github.com/mattkrea/go-request) [![Build Status](https://travis-ci.org/mattkrea/go-request.svg?branch=master)](https://travis-ci.org/mattkrea/go-request)
 
 ### Example
 
