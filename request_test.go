@@ -1,7 +1,6 @@
 package request
 
 import (
-	"log"
 	"testing"
 )
 
