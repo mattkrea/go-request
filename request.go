@@ -59,6 +59,10 @@ func Post(url string, body interface{}) *Request {
 		method: POST,
 	}
 
+	if r.headers == nil {
+		r.headers = make(map[string]string)
+	}
+
 	if body != nil {
 
 		requestBody, _ := json.Marshal(body)
@@ -75,6 +79,10 @@ func Put(url string, body interface{}) *Request {
 	r := &Request{
 		url:    url,
 		method: PUT,
+	}
+
+	if r.headers == nil {
+		r.headers = make(map[string]string)
 	}
 
 	if body != nil {
@@ -106,12 +114,20 @@ func Options(url string) *Request {
 
 func (r *Request) Header(key string, value string) *Request {
 
+	if r.headers == nil {
+		r.headers = make(map[string]string)
+	}
+
 	r.headers[key] = value
 
 	return r
 }
 
 func (r *Request) Headers(h map[string]string) *Request {
+
+	if r.headers == nil {
+		r.headers = make(map[string]string)
+	}
 
 	for k, v := range h {
 		r = r.Header(k, v)

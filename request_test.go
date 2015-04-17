@@ -1,6 +1,7 @@
 package request
 
 import (
+	"log"
 	"testing"
 )
 
@@ -11,6 +12,12 @@ type httpbinResponseStruct struct {
 	Headers map[string]interface{} `json:"headers"`
 	Origin  string                 `json:"origin"`
 	URL     string                 `json:"url"`
+	JSON    map[string]string      `json:"json"`
+}
+
+type httpbinRequest struct {
+	Property        string `json:"property"`
+	AnotherProperty string `json:"anotherProperty"`
 }
 
 func TestAssignURL(t *testing.T) {
@@ -132,6 +139,43 @@ func TestGetRequestWithMap(t *testing.T) {
 	}
 
 	if result.URL != url {
+		t.FailNow()
+	}
+}
+
+func TestPostRequestWithoutPayload(t *testing.T) {
+
+	var result httpbinResponseStruct
+
+	err := Post("http://httpbin.org/post", nil).Map(&result)
+	if err != nil {
+		t.FailNow()
+	}
+
+	if result.URL != "http://httpbin.org/post" {
+		t.FailNow()
+	}
+}
+
+func TestPostRequestWithPayload(t *testing.T) {
+
+	var result httpbinResponseStruct
+
+	body := &httpbinRequest{
+		Property:        "Foo",
+		AnotherProperty: "Bar",
+	}
+
+	err := Post("http://httpbin.org/post", body).Map(&result)
+	if err != nil {
+		t.FailNow()
+	}
+
+	if result.URL != "http://httpbin.org/post" {
+		t.FailNow()
+	}
+
+	if result.JSON["anotherProperty"] != body.AnotherProperty {
 		t.FailNow()
 	}
 }
