@@ -52,15 +52,40 @@ func Get(url string) *Request {
 	}
 }
 
+func Post(url string, body interface{}) *Request {
+
+	r := &Request{
+		url:    url,
+		method: POST,
+	}
+
+	if body != nil {
+
+		requestBody, _ := json.Marshal(body)
+
+		r.body = bytes.NewBuffer(requestBody)
+		r.headers["Content-Type"] = "application/json"
+	}
+
+	return r
+}
+
 func Put(url string, body interface{}) *Request {
 
-	requestBody, _ := json.Marshal(body)
-
-	return &Request{
+	r := &Request{
 		url:    url,
 		method: PUT,
-		body:   bytes.NewBuffer(requestBody),
 	}
+
+	if body != nil {
+
+		requestBody, _ := json.Marshal(body)
+
+		r.body = bytes.NewBuffer(requestBody)
+		r.headers["Content-Type"] = "application/json"
+	}
+
+	return r
 }
 
 func Head(url string) *Request {
@@ -76,17 +101,6 @@ func Options(url string) *Request {
 	return &Request{
 		url:    url,
 		method: OPTIONS,
-	}
-}
-
-func Post(url string, body interface{}) *Request {
-
-	requestBody, _ := json.Marshal(body)
-
-	return &Request{
-		url:    url,
-		method: POST,
-		body:   bytes.NewBuffer(requestBody),
 	}
 }
 
