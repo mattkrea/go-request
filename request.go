@@ -127,7 +127,16 @@ func (r *Request) Do() ([]byte, error) {
 	}
 
 	cli := &http.Client{}
-	req, err := http.NewRequest(r.method.string(), r.url, r.body)
+
+	var req *http.Request
+	var err error
+
+	if r.body != nil {
+		req, err = http.NewRequest(r.method.string(), r.url, r.body)
+	} else {
+		req, err = http.NewRequest(r.method.string(), r.url, nil)
+	}
+
 	if err != nil {
 		return nil, err
 	}
