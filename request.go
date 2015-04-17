@@ -10,6 +10,7 @@ import (
 type RequestMethod string
 
 const (
+	// Http methods
 	GET     RequestMethod = "GET"
 	HEAD    RequestMethod = "HEAD"
 	PUT     RequestMethod = "PUT"
@@ -18,6 +19,7 @@ const (
 	DELETE  RequestMethod = "DELETE"
 )
 
+// Request is the base struct for all methods
 type Request struct {
 	url     string
 	headers map[string]string
@@ -25,6 +27,7 @@ type Request struct {
 	method  RequestMethod
 }
 
+// New initializes a request (defaulting to GET)
 func New(url string) *Request {
 
 	r := &Request{
@@ -37,6 +40,9 @@ func New(url string) *Request {
 	return r
 }
 
+// Method allows you to set a request method in the case
+// that you choose to use a method outside of those provided
+// with shorthand methods such as Get(), Post(), etc
 func (r *Request) Method(method RequestMethod) *Request {
 
 	r.method = method
@@ -44,6 +50,7 @@ func (r *Request) Method(method RequestMethod) *Request {
 	return r
 }
 
+// Get is shorthand for New().Method(GET)
 func Get(url string) *Request {
 
 	return &Request{
@@ -52,6 +59,9 @@ func Get(url string) *Request {
 	}
 }
 
+// Post is shorthand for New().Method(POST)
+// You may also provide a request body (struct) that
+// will be serialized into JSON and sent with the request
 func Post(url string, body interface{}) *Request {
 
 	r := &Request{
@@ -74,6 +84,8 @@ func Post(url string, body interface{}) *Request {
 	return r
 }
 
+// Put is shorthand for New().Method(PUT)
+// Similar to Post() you can provide a request body
 func Put(url string, body interface{}) *Request {
 
 	r := &Request{
@@ -96,6 +108,7 @@ func Put(url string, body interface{}) *Request {
 	return r
 }
 
+// Head is shorthand for New().Method(HEAD)
 func Head(url string) *Request {
 
 	return &Request{
@@ -104,6 +117,7 @@ func Head(url string) *Request {
 	}
 }
 
+// Options is shorthand for New().Method(OPTION)
 func Options(url string) *Request {
 
 	return &Request{
@@ -112,6 +126,7 @@ func Options(url string) *Request {
 	}
 }
 
+// Header sets a request header
 func (r *Request) Header(key string, value string) *Request {
 
 	if r.headers == nil {
@@ -123,6 +138,8 @@ func (r *Request) Header(key string, value string) *Request {
 	return r
 }
 
+// Headers is a shortcut to 'Header' allowing you to set
+// multiple in a single method call
 func (r *Request) Headers(h map[string]string) *Request {
 
 	if r.headers == nil {
@@ -136,6 +153,8 @@ func (r *Request) Headers(h map[string]string) *Request {
 	return r
 }
 
+// Do provides a simple way to finalize a request with all
+// previously provided settings and returns a byte slice or error
 func (r *Request) Do() ([]byte, error) {
 
 	if r.method == "" {
@@ -174,6 +193,9 @@ func (r *Request) Do() ([]byte, error) {
 	return body, nil
 }
 
+// Map allows you to provide a struct that a response
+// body will be deserialized directly into rather than
+// having to call request.Do() and handle the JSON yourself
 func (r *Request) Map(i interface{}) error {
 
 	resp, err := r.Do()
