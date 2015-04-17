@@ -10,7 +10,6 @@ import (
 type RequestMethod string
 
 const (
-	// Http methods
 	GET     RequestMethod = "GET"
 	HEAD    RequestMethod = "HEAD"
 	PUT     RequestMethod = "PUT"
