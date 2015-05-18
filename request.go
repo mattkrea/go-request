@@ -26,6 +26,12 @@ type Request struct {
 	method  RequestMethod
 }
 
+type Response struct {
+	Status  int
+	Headers *http.Header
+	Bytes   []byte
+}
+
 // New initializes a request (defaulting to GET)
 func New(url string) *Request {
 
@@ -154,7 +160,7 @@ func (r *Request) Headers(h map[string]string) *Request {
 
 // Do provides a simple way to finalize a request with all
 // previously provided settings and returns a byte slice or error
-func (r *Request) Do() ([]byte, error) {
+func (r *Request) Do() (*Response, error) {
 
 	if r.method == "" {
 		r.method = GET
@@ -172,7 +178,7 @@ func (r *Request) Do() ([]byte, error) {
 	}
 
 	if err != nil {
-		return nil, err
+		return &Response{}, err
 	}
 
 	for header, value := range r.headers {
@@ -181,15 +187,19 @@ func (r *Request) Do() ([]byte, error) {
 
 	res, err := cli.Do(req)
 	if err != nil {
-		return nil, err
+		return &Response{}, err
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, err
+		return &Response{}, err
 	}
 
-	return body, nil
+	return &Response{
+		Status:  res.StatusCode,
+		Headers: &res.Header,
+		Bytes:   body,
+	}, nil
 }
 
 // Map allows you to provide a struct that a response
@@ -202,7 +212,7 @@ func (r *Request) Map(i interface{}) error {
 		return err
 	}
 
-	err = json.Unmarshal(resp, &i)
+	err = json.Unmarshal(resp.Bytes, &i)
 
 	return err
 }
