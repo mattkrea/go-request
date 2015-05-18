@@ -26,6 +26,9 @@ type Request struct {
 	method  RequestMethod
 }
 
+// Response is an expansion of the previously available
+// 'bytes-only' response since I needed status codes for
+// another unrelated project
 type Response struct {
 	Status  int
 	Headers *http.Header

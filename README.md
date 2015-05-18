@@ -8,6 +8,7 @@ some of the common boilerplate.
 
 ```go
 import "github.com/mattkrea/go-request"
+import "log"
 
 func main() {
 
@@ -32,5 +33,14 @@ func main() {
 		// handle err
 	}
 
+	// Want raw data back?
+	res, err := request.Get("http://httpbin.org/get").Do()
+	if err != nil {
+		// handle err
+	} else if res.Status != 200 {
+		// handle non-success status code
+	}
+
+	log.Printf("%s", res.Bytes)
 }
 ```
