@@ -42,10 +42,7 @@ func main() {
 	}
 
 	// Or how about async?
-	responseQueue := make(chan *request.Response)
-	errorQueue := make(chan error)
-
-	request.Get("http://httpbin.org/get").DoAsync(responseQueue, errorQueue)
+	responseQueue, errorQueue := request.Get("http://httpbin.org/get").DoAsync()
 	if err := <- errorQueue; err != nil {
 		// handle err
 	}
