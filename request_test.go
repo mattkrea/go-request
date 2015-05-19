@@ -129,6 +129,18 @@ func TestGetRequestWithDo(t *testing.T) {
 	}
 }
 
+func TestGetRequestForStatus(t *testing.T) {
+
+	res, err := Get(url).Do()
+	if err != nil {
+		t.FailNow()
+	}
+
+	if res.Status != 200 {
+		t.FailNow()
+	}
+}
+
 func TestGetRequestWithMap(t *testing.T) {
 
 	var result httpbinResponseStruct

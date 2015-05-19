@@ -230,6 +230,8 @@ func (m RequestMethod) string() string {
 		return "POST"
 	case OPTIONS:
 		return "OPTIONS"
+	case DELETE:
+		return "DELETE"
 	}
 
 	return "GET"
