@@ -141,6 +141,23 @@ func TestGetRequestForStatus(t *testing.T) {
 	}
 }
 
+func TestGetRequestAsync(t *testing.T) {
+
+	response := make(chan *Response)
+	e := make(chan error)
+
+	Get(url).DoAsync(response, e)
+
+	if err := <-e; err != nil {
+		t.FailNow()
+	}
+
+	res := <-response
+	if res.Status != 200 {
+		t.FailNow()
+	}
+}
+
 func TestGetRequestWithMap(t *testing.T) {
 
 	var result httpbinResponseStruct

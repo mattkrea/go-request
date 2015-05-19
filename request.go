@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -203,6 +204,23 @@ func (r *Request) Do() (*Response, error) {
 		Headers: &res.Header,
 		Bytes:   body,
 	}, nil
+}
+
+// DoAsync allows you to pass in a chan and have the
+// request operate inside of a go routine. The *Response will come
+// back through the provided chan.
+func (r *Request) DoAsync(response chan *Response, err chan error) {
+	go func() {
+		res, e := r.Do()
+		log.Printf("%v", "wut")
+		if e != nil {
+			err <- e
+			response <- nil
+		} else {
+			err <- nil
+			response <- res
+		}
+	}()
 }
 
 // Map allows you to provide a struct that a response

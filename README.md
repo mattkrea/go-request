@@ -41,6 +41,17 @@ func main() {
 		// handle non-success status code
 	}
 
-	log.Printf("%s", res.Bytes)
+	// Or how about async?
+	responseQueue := make(chan *request.Response)
+	errorQueue := make(chan error)
+
+	request.Get("http://httpbin.org/get").DoAsync(responseQueue, errorQueue)
+	if err := <- errorQueue; err != nil {
+		// handle err
+	}
+
+	response := <- responseQueue
+
+	log.Printf("Raw: %v", response.Bytes)
 }
 ```
