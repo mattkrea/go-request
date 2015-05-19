@@ -169,6 +169,16 @@ func TestGetRequestWithMap(t *testing.T) {
 	}
 }
 
+func TestGetRequestWithMapWithError(t *testing.T) {
+
+	var result httpbinResponseStruct
+
+	err := New("http://htbin.org").Map(&result)
+	if err == nil {
+		t.FailNow()
+	}
+}
+
 func TestPostRequestWithoutPayload(t *testing.T) {
 
 	var result httpbinResponseStruct

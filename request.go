@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -138,10 +137,6 @@ func Options(url string) *Request {
 // Header sets a request header
 func (r *Request) Header(key string, value string) *Request {
 
-	if r.headers == nil {
-		r.headers = make(map[string]string)
-	}
-
 	r.headers[key] = value
 
 	return r
@@ -150,10 +145,6 @@ func (r *Request) Header(key string, value string) *Request {
 // Headers is a shortcut to 'Header' allowing you to set
 // multiple in a single method call
 func (r *Request) Headers(h map[string]string) *Request {
-
-	if r.headers == nil {
-		r.headers = make(map[string]string)
-	}
 
 	for k, v := range h {
 		r = r.Header(k, v)
