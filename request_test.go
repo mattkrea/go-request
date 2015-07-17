@@ -82,6 +82,11 @@ func TestAssignHeadMethod(t *testing.T) {
 	if r.method != method {
 		t.FailNow()
 	}
+
+	r = Head(url)
+	if r.method != method {
+		t.FailNow()
+	}
 }
 
 func TestAssignOptionsMethod(t *testing.T) {
@@ -90,6 +95,11 @@ func TestAssignOptionsMethod(t *testing.T) {
 
 	r := New(url).Method(method)
 
+	if r.method != method {
+		t.FailNow()
+	}
+
+	r = Options(url)
 	if r.method != method {
 		t.FailNow()
 	}
@@ -208,6 +218,43 @@ func TestPostRequestWithPayload(t *testing.T) {
 	}
 
 	if result.URL != "http://httpbin.org/post" {
+		t.FailNow()
+	}
+
+	if result.JSON["anotherProperty"] != body.AnotherProperty {
+		t.FailNow()
+	}
+}
+
+func TestPutRequestWithPayload(t *testing.T) {
+
+	var result httpbinResponseStruct
+
+	err := Put("http://httpbin.org/put", nil).Map(&result)
+	if err != nil {
+		t.FailNow()
+	}
+
+	if result.URL != "http://httpbin.org/put" {
+		t.FailNow()
+	}
+}
+
+func TestPutRequestWithoutPaylod(t *testing.T) {
+
+	var result httpbinResponseStruct
+
+	body := &httpbinRequest{
+		Property:        "Foo",
+		AnotherProperty: "Bar",
+	}
+
+	err := Put("http://httpbin.org/put", body).Map(&result)
+	if err != nil {
+		t.FailNow()
+	}
+
+	if result.URL != "http://httpbin.org/put" {
 		t.FailNow()
 	}
 
