@@ -226,7 +226,7 @@ func TestPostRequestWithPayload(t *testing.T) {
 	}
 }
 
-func TestPutRequestWithPayload(t *testing.T) {
+func TestPutRequestWithoutPayload(t *testing.T) {
 
 	var result httpbinResponseStruct
 
@@ -240,7 +240,7 @@ func TestPutRequestWithPayload(t *testing.T) {
 	}
 }
 
-func TestPutRequestWithoutPaylod(t *testing.T) {
+func TestPutRequestWithPaylod(t *testing.T) {
 
 	var result httpbinResponseStruct
 

@@ -62,8 +62,9 @@ func (r *Request) Method(method RequestMethod) *Request {
 func Get(url string) *Request {
 
 	return &Request{
-		url:    url,
-		method: GET,
+		url:     url,
+		method:  GET,
+		headers: make(map[string]string),
 	}
 }
 
